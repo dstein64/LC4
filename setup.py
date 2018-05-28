@@ -9,11 +9,11 @@ setup(
     name='lc4',
     packages=['lc4'],
     package_data={'lc4': ['version.txt']},
+    scripts=['bin/lc4'],
     license='MIT',
     version=version,
-    description='A NumPy-based Python implementation of ElsieFour (LC4)',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
+    description='A Python implementation of ElsieFour (LC4)',
+    long_description=open('README.rst').read(),
     author='Daniel Steinberg',
     author_email='ds@dannyadam.com',
     url='https://github.com/dstein64/lc4',
@@ -34,5 +34,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6'
     ],
-    install_requires=['numpy']
+    requires=['numpy']
 )

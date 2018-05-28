@@ -1,3 +1,8 @@
+from __future__ import print_function
+
+import argparse
+import sys
+
 import numpy as np
 
 _ALPHABET = list("#_23456789abcdefghijklmnopqrstuvwxyz")
@@ -84,7 +89,8 @@ def decrypt(key, nonce, text, header=""):
     return decrypted
 
 
-if __name__ == "__main__":
+def main(argv=sys.argv):
+    print(argv)
     key = "xv7ydq#opaj_39rzut8b45wcsgehmiknf26l"
     nonce = "solwbf"
     text = "im_about_to_put_the_hammer_down"
@@ -95,3 +101,7 @@ if __name__ == "__main__":
 
     decrypted = decrypt(key, nonce, encrypted)
     print("Decrypted: {}".format(decrypted))
+
+
+if __name__ == "__main__":
+    sys.exit(main())
