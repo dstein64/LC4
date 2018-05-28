@@ -1,12 +1,34 @@
 from __future__ import print_function
 
 import argparse
-# Import from builtins for Python 2 compatibility
-from builtins import range, input
 import random
 import sys
 
 import numpy as np
+
+# ************************************************************
+# * Utils
+# ************************************************************
+
+_major_version = sys.version_info.major
+if _major_version not in (2, 3):
+    raise RuntimeError("Unsupported version of Python: {}".format(_major_version))
+
+
+def _range(*args, **kwargs):
+    if _major_version == 2:
+        import __builtin__
+        return __builtin__.xrange(*args, **kwargs)
+    else:
+        import builtins
+        return builtins.range(*args, **kwargs)
+
+
+def _input(*args, **kwargs):
+    if _major_version == 2:
+        return raw_input(*args, **kwargs)
+    else:
+        return input(*args, **kwargs)
 
 # ************************************************************
 # * Core (private)
@@ -18,7 +40,7 @@ _DEFAULT_ALPHABET = "#_23456789abcdefghijklmnopqrstuvwxyz"
 class _State:
     def __init__(self, K):
         self.S = np.empty((6, 6), dtype=int)
-        for k in range(36):
+        for k in _range(36):
             self.S[divmod(k, 6)] = K[k]
         self.i = 0
         self.j = 0
@@ -110,7 +132,7 @@ def _input_loop(prompt, strip=True, required=True):
         pass
     while True:
         try:
-            selection = input(prompt)
+            selection = _input(prompt)
             if strip:
                 selection = selection.strip()
         except EOFError:
@@ -173,7 +195,7 @@ def main(argv=sys.argv):
             print("".join(random.sample(args.alphabet, 36)))
         elif selection == "2":
             nonce_chars = []
-            for _ in range(args.nonce_length):
+            for _ in _range(args.nonce_length):
                 nonce_chars.extend(random.sample(args.alphabet, 1))
             print("".join(nonce_chars))
         elif selection in ("3", "4"):
