@@ -1,12 +1,18 @@
 from __future__ import print_function
 
 import argparse
+# Import from builtins for Python 2 compatibility
+from builtins import range, input
+import random
 import sys
 
 import numpy as np
 
-_ALPHABET = list("#_23456789abcdefghijklmnopqrstuvwxyz")
-_INDEX_LOOKUP = {val: idx for idx, val in enumerate(_ALPHABET)}
+# ************************************************************
+# * Core (private)
+# ************************************************************
+
+_DEFAULT_ALPHABET = "#_23456789abcdefghijklmnopqrstuvwxyz"
 
 
 class _State:
@@ -69,38 +75,132 @@ def _decrypt(state, C):
     return P
 
 
-def encrypt(key, nonce, text, signature="", header=""):
-    K = np.array([_INDEX_LOOKUP[x] for x in key.lower()])
+# ************************************************************
+# * Core (public)
+# ************************************************************
+
+def encrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET):
+    index_lookup = {c: idx for idx, c in enumerate(alphabet)}
+    K = np.array([index_lookup[x] for x in key.lower()])
     state = _State(K)
-    _encrypt(state, np.array([_INDEX_LOOKUP[x] for x in nonce.lower()]))
-    _encrypt(state, np.array([_INDEX_LOOKUP[x] for x in header.lower()]))
-    P = np.array([_INDEX_LOOKUP[x] for x in (text + signature).lower()])
-    encrypted = ''.join(_ALPHABET[x] for x in _encrypt(state, P))
+    _encrypt(state, np.array([index_lookup[x] for x in nonce.lower()]))
+    P = np.array([index_lookup[x] for x in text.lower()])
+    encrypted = "".join(alphabet[x] for x in _encrypt(state, P))
     return encrypted
 
 
-def decrypt(key, nonce, text, header=""):
-    K = np.array([_INDEX_LOOKUP[x] for x in key.lower()])
+def decrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET):
+    index_lookup = {c: idx for idx, c in enumerate(alphabet)}
+    K = np.array([index_lookup[x] for x in key.lower()])
     state = _State(K)
-    _encrypt(state, np.array([_INDEX_LOOKUP[x] for x in nonce.lower()]))
-    _encrypt(state, np.array([_INDEX_LOOKUP[x] for x in header.lower()]))
-    C = np.array([_INDEX_LOOKUP[x] for x in text.lower()])
-    decrypted = ''.join(_ALPHABET[x] for x in _decrypt(state, C))
+    _encrypt(state, np.array([index_lookup[x] for x in nonce.lower()]))
+    C = np.array([index_lookup[x] for x in text.lower()])
+    decrypted = "".join(alphabet[x] for x in _decrypt(state, C))
     return decrypted
 
 
+# ************************************************************
+# * Interactive Command Line Interface
+# ************************************************************
+
+def _input_loop(prompt, strip=True, required=True):
+    try:
+        import readline
+    except:
+        pass
+    while True:
+        try:
+            selection = input(prompt)
+            if strip:
+                selection = selection.strip()
+        except EOFError:
+            sys.exit(1)
+        except KeyboardInterrupt:
+            # With readline, stdin is flushed after a KeyboarInterrupt.
+            # Otherwise, exit.
+            if 'readline' not in sys.modules:
+                sys.exit(1)
+            print()
+            continue
+        if required and not selection:
+            continue
+        break
+    return selection
+
+
+def _parse_args(argv):
+    def positive_int_arg_type(val):
+        int_val = int(val)
+        if int_val <= 0:
+            raise argparse.ArgumentTypeError("invalid positive int value: '{}'".format(val))
+        return int_val
+
+    def alphabet_arg_type(val):
+        if len(val) != 36:
+            raise argparse.ArgumentTypeError("alphabet must have 36 characters")
+        return val
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-a", "--alphabet",
+        default=_DEFAULT_ALPHABET,
+        type=alphabet_arg_type,
+        metavar="S",
+        help="A string of 36 characters representing the alphabet."
+    )
+    parser.add_argument(
+        "-n", "--nonce-length",
+        default=6,
+        type=positive_int_arg_type,
+        metavar="N",
+        help="The number of characters in randomly generated nonces (option 2)."
+    )
+    args = parser.parse_args(argv[1:])
+    return args
+
+
 def main(argv=sys.argv):
-    print(argv)
-    key = "xv7ydq#opaj_39rzut8b45wcsgehmiknf26l"
-    nonce = "solwbf"
-    text = "im_about_to_put_the_hammer_down"
-    signature = "#rubberduck"
+    args = _parse_args(argv)
 
-    encrypted = encrypt(key, nonce, text, signature=signature)
-    print("Encrypted: {}".format(encrypted))
+    while True:
+        print("1. Generate Key")
+        print("2. Generate Nonce")
+        print("3. Encrypt")
+        print("4. Decrypt")
+        print("5. Quit")
+        selection = _input_loop(">>> ")
+        if selection == "1":
+            print("".join(random.sample(args.alphabet, 36)))
+        elif selection == "2":
+            nonce_chars = []
+            for _ in range(args.nonce_length):
+                nonce_chars.extend(random.sample(args.alphabet, 1))
+            print("".join(nonce_chars))
+        elif selection in ("3", "4"):
+            def validated_input(prompt, valid_chars):
+                while True:
+                    val = _input_loop(prompt)
+                    diff = set(val) - valid_chars
+                    if not diff:
+                        return val
+                    sys.stderr.write("Unsupported characters: {}\n".format("".join(diff)))
 
-    decrypted = decrypt(key, nonce, encrypted)
-    print("Decrypted: {}".format(decrypted))
+            valid_chars = set(args.alphabet)
+            key = validated_input("Key: ", valid_chars)
+            nonce = validated_input("Nonce: ", valid_chars)
+            text = validated_input("Text: ", valid_chars)
+            if selection == "3":
+                print(encrypt(key, text, nonce=nonce))
+            else:
+                print(decrypt(key, text, nonce=nonce))
+        elif selection == "5":
+            pass
+        else:
+            print("Invalid selection: {}".format(selection))
+            continue
+        break
+
+    return 0
 
 
 if __name__ == "__main__":
