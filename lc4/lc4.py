@@ -162,7 +162,7 @@ def _parse_args(argv):
             raise argparse.ArgumentTypeError("alphabet must have 36 characters")
         return val
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "-a", "--alphabet",
         default=_DEFAULT_ALPHABET,
