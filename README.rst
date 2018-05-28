@@ -33,7 +33,7 @@ See `example.py <https://github.com/dstein64/LC4/blob/master/example.py>`__.
 License
 -------
 
-LC4 has an `MIT License <https://en.wikipedia.org/wiki/MIT_License>`__.
+The code in this repository has an `MIT License <https://en.wikipedia.org/wiki/MIT_License>`__.
 
 See `LICENSE <https://github.com/dstein64/LC4/blob/master/LICENSE>`__.
 
