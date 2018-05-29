@@ -40,6 +40,9 @@ generate nonces, generate keys, and encrypt/decrypt text.
 ##### Example session
 
 ```
+$ lc4 --version
+lc4 0.1.3
+
 $ lc4 --help
 usage: lc4.py [-h] [-a STRING] [-n INTEGER]
 

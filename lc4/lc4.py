@@ -1,10 +1,15 @@
 from __future__ import print_function
 
 import argparse
+import os
 import random
 import sys
 
 import numpy as np
+
+version_txt = os.path.join(os.path.dirname(__file__), 'version.txt')
+with open(version_txt, 'r') as f:
+    __version__ = f.read().strip()
 
 # ************************************************************
 # * Utils
@@ -165,6 +170,7 @@ def _parse_args(argv):
         return val
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("--version", action="version", version="lc4 {}".format(__version__))
     parser.add_argument(
         "-a", "--alphabet",
         default=_DEFAULT_ALPHABET,
