@@ -160,6 +160,8 @@ def _parse_args(argv):
     def alphabet_arg_type(val):
         if len(val) != 36:
             raise argparse.ArgumentTypeError("alphabet must have 36 characters")
+        if len(val) != len(set(val)):
+            raise argparse.ArgumentTypeError("characters in alphabet must be unique")
         return val
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -208,7 +210,18 @@ def main(argv=sys.argv):
                     sys.stderr.write("Unsupported characters: {}\n".format("".join(diff)))
 
             valid_chars = set(args.alphabet)
-            key = validated_input("Key: ", valid_chars)
+            while True:
+                key = validated_input("Key: ", valid_chars)
+                valid_key = True
+                if len(key) != len(args.alphabet):
+                    valid_key = False
+                    sys.stderr.write("Key must include exactly 36 characters.\n")
+                missing_chars = set(args.alphabet) - set(key)
+                if len(missing_chars) > 0:
+                    valid_key = False
+                    sys.stderr.write("Missing characters: {}\n".format("".join(missing_chars)))
+                if valid_key:
+                    break
             nonce = validated_input("Nonce: ", valid_chars)
             text = validated_input("Text: ", valid_chars)
             if selection == "3":
