@@ -5,8 +5,7 @@ Features
 --------
 
 - Support for custom alphabets
-- An `interactive command-line utility
-<https://github.com/dstein64/LC4/blob/master/documentation.md#interactive-command-line-utility>`__
+- An `interactive command-line utility <https://github.com/dstein64/LC4/blob/master/documentation.md#interactive-command-line-utility>`__
 
 Requirements
 ------------
