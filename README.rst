@@ -5,7 +5,8 @@ Features
 --------
 
 - Support for custom alphabets
-- Includes an interactive command-line utility
+- An `interactive command-line utility
+<https://github.com/dstein64/LC4/blob/master/documentation.md#interactive-command-line-utility>`__
 
 Requirements
 ------------
@@ -24,6 +25,11 @@ Installation
 ::
 
     $ pip install lc4
+
+Documentation
+-------------
+
+See `documentation.md <https://github.com/dstein64/LC4/blob/master/documentation.md>`__.
 
 Example Usage
 -------------
