@@ -41,13 +41,14 @@ generate nonces, generate keys, and encrypt/decrypt text.
 
 ```
 $ lc4 --help
-usage: lc4.py [-h] [-a S] [-n N]
+usage: lc4.py [-h] [-a STRING] [-n INTEGER]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -a S, --alphabet S    A string of 36 characters representing the alphabet.
+  -a STRING, --alphabet STRING
+                        A string of 36 characters representing the alphabet.
                         (default: #_23456789abcdefghijklmnopqrstuvwxyz)
-  -n N, --nonce-length N
+  -n INTEGER, --nonce-length INTEGER
                         The number of characters in randomly generated nonces
                         when using option 2. (default: 6)
 

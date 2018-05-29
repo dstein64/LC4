@@ -169,14 +169,14 @@ def _parse_args(argv):
         "-a", "--alphabet",
         default=_DEFAULT_ALPHABET,
         type=alphabet_arg_type,
-        metavar="S",
+        metavar="STRING",
         help="A string of 36 characters representing the alphabet."
     )
     parser.add_argument(
         "-n", "--nonce-length",
         default=6,
         type=positive_int_arg_type,
-        metavar="N",
+        metavar="INTEGER",
         help="The number of characters in randomly generated nonces when using option 2."
     )
     args = parser.parse_args(argv[1:])
