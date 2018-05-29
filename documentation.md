@@ -49,7 +49,7 @@ optional arguments:
                         (default: #_23456789abcdefghijklmnopqrstuvwxyz)
   -n N, --nonce-length N
                         The number of characters in randomly generated nonces
-                        (option 2). (default: 6)
+                        when using option 2. (default: 6)
 
 $ lc4
 1. Generate Key

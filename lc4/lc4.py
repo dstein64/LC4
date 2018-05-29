@@ -175,7 +175,7 @@ def _parse_args(argv):
         default=6,
         type=positive_int_arg_type,
         metavar="N",
-        help="The number of characters in randomly generated nonces (option 2)."
+        help="The number of characters in randomly generated nonces when using option 2."
     )
     args = parser.parse_args(argv[1:])
     return args
