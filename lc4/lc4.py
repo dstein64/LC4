@@ -169,7 +169,10 @@ def _parse_args(argv):
             raise argparse.ArgumentTypeError("characters in alphabet must be unique")
         return val
 
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(
+        prog="lc4",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
     parser.add_argument("--version", action="version", version="lc4 {}".format(__version__))
     parser.add_argument(
         "-a", "--alphabet",
