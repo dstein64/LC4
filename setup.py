@@ -1,23 +1,13 @@
 import os
-from distutils.core import setup
+from setuptools import setup
 
 version_txt = os.path.join(os.path.dirname(__file__), 'lc4', 'version.txt')
 with open(version_txt, 'r') as f:
     version = f.read().strip()
 
 setup(
-    name='lc4',
-    packages=['lc4'],
-    package_data={'lc4': ['version.txt']},
-    scripts=['bin/lc4'],
-    license='MIT',
-    version=version,
-    description='A Python implementation of ElsieFour (LC4)',
-    long_description=open('README.rst').read(),
     author='Daniel Steinberg',
     author_email='ds@dannyadam.com',
-    url='https://github.com/dstein64/lc4',
-    keywords=['cryptography', 'lc4', 'elsie-four'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -30,9 +20,20 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Operating System :: MacOS',
         'Operating System :: Microsoft :: Windows',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6'
     ],
-    requires=['numpy']
+    description='A Python implementation of ElsieFour (LC4)',
+    entry_points={
+        'console_scripts': ['lc4=lc4.lc4:main'],
+    },
+    keywords=['cryptography', 'lc4', 'elsie-four'],
+    license='MIT',
+    long_description=open('README.rst').read(),
+    name='lc4',
+    package_data={'lc4': ['version.txt']},
+    packages=['lc4'],
+    python_requires='>=3.5',
+    install_requires=['numpy'],
+    url='https://github.com/dstein64/lc4',
+    version=version,
 )

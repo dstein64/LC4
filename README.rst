@@ -6,11 +6,12 @@ Features
 
 - Support for custom alphabets
 - An `interactive command-line utility <https://github.com/dstein64/LC4/blob/master/documentation.md#interactive-command-line-utility>`__
+- Optional verbose output that visually shows the steps of the algorithm
 
 Requirements
 ------------
 
-LC4 supports Python 2.7 and Python 3.x.
+LC4 supports Python 3.x.
 
 Linux, Mac, and Windows are supported.
 
@@ -23,7 +24,7 @@ Installation
 
 ::
 
-    $ pip install lc4
+    $ pip3 install lc4
 
 Documentation
 -------------

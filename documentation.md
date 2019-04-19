@@ -31,6 +31,8 @@ randonly generated using the command-line utility (see *Interactive Command-Line
 documentaion below).
 * **alphabet** (optional; defaults to "#_23456789abcdefghijklmnopqrstuvwxyz") A string of 36
 unique characters that comprise messages.
+* **verbose** (optional; defaults to False) A boolean indicating whether there should be
+status logging to stdout.
 
 ### Interactive Command-Line Utility
 
