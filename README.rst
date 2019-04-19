@@ -1,5 +1,5 @@
 A Python library that implements ElsieFour (LC4) encryption, based on the algorithm in
-(Kaminsky 2017).
+(Alan Kaminsky 2017).
 
 Features
 --------
