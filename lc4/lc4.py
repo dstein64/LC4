@@ -12,7 +12,7 @@ with open(version_txt, 'r') as f:
 
 _python_major_version = sys.version_info.major
 if _python_major_version < 3:
-    message = "Unsupported version of Python: {}".format(_python_major_version)
+    message = 'Unsupported version of Python: {}'.format(_python_major_version)
     raise RuntimeError(message)
 
 
@@ -88,7 +88,7 @@ class _Logger:
 # * Core (private)
 # ************************************************************
 
-_DEFAULT_ALPHABET = "#_23456789abcdefghijklmnopqrstuvwxyz"
+_DEFAULT_ALPHABET = '#_23456789abcdefghijklmnopqrstuvwxyz'
 
 
 class _State:
@@ -202,7 +202,7 @@ class _LC4Runner:
 # * Core (public)
 # ************************************************************
 
-def encrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET, verbose=False):
+def encrypt(key, text, nonce='', alphabet=_DEFAULT_ALPHABET, verbose=False):
     logger = _Logger(verbose)
     colorize = _isatty(logger.stream)
     index_lookup = {c: idx for idx, c in enumerate(alphabet)}
@@ -212,13 +212,13 @@ def encrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET, verbose=False):
     lc4_runner.encrypt(np.array([index_lookup[x] for x in nonce]))
     C = lc4_runner.encrypt(np.array([index_lookup[x] for x in text]))
     logger.log(lc4_runner.history.stringify(alphabet, colorize=colorize))
-    encrypted = "".join(alphabet[x] for x in C)
+    encrypted = ''.join(alphabet[x] for x in C)
     logger.log('Encrypted: {}\n'.format(
         _colorize(encrypted, _Color.BLUE) if colorize else encrypted))
     return encrypted
 
 
-def decrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET, verbose=False):
+def decrypt(key, text, nonce='', alphabet=_DEFAULT_ALPHABET, verbose=False):
     logger = _Logger(verbose)
     colorize = _isatty(logger.stream)
     index_lookup = {c: idx for idx, c in enumerate(alphabet)}
@@ -228,7 +228,7 @@ def decrypt(key, text, nonce="", alphabet=_DEFAULT_ALPHABET, verbose=False):
     lc4_runner.encrypt(np.array([index_lookup[x] for x in nonce]))
     P = lc4_runner.decrypt(np.array([index_lookup[x] for x in text]))
     logger.log(lc4_runner.history.stringify(alphabet, colorize=colorize))
-    decrypted = "".join(alphabet[x] for x in P)
+    decrypted = ''.join(alphabet[x] for x in P)
     logger.log('Decrypted: {}\n'.format(
         _colorize(decrypted, _Color.BLUE) if colorize else decrypted))
     return decrypted
@@ -267,34 +267,34 @@ def _parse_args(argv):
     def positive_int_arg_type(val):
         int_val = int(val)
         if int_val <= 0:
-            raise argparse.ArgumentTypeError("invalid positive int value: '{}'".format(val))
+            raise argparse.ArgumentTypeError('invalid positive int value: \'{}\''.format(val))
         return int_val
 
     def alphabet_arg_type(val):
         if len(val) != 36:
-            raise argparse.ArgumentTypeError("alphabet must have 36 characters")
+            raise argparse.ArgumentTypeError('alphabet must have 36 characters')
         if len(val) != len(set(val)):
-            raise argparse.ArgumentTypeError("characters in alphabet must be unique")
+            raise argparse.ArgumentTypeError('characters in alphabet must be unique')
         return val
 
     parser = argparse.ArgumentParser(
-        prog="lc4",
+        prog='lc4',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument("--version", action="version", version="lc4 {}".format(__version__))
+    parser.add_argument('--version', action='version', version='lc4 {}'.format(__version__))
     parser.add_argument(
-        "-a", "--alphabet",
+        '-a', '--alphabet',
         default=_DEFAULT_ALPHABET,
         type=alphabet_arg_type,
-        metavar="STRING",
-        help="A string of 36 characters representing the alphabet."
+        metavar='STRING',
+        help='A string of 36 characters representing the alphabet.'
     )
     parser.add_argument(
-        "-n", "--nonce-length",
+        '-n', '--nonce-length',
         default=6,
         type=positive_int_arg_type,
-        metavar="INTEGER",
-        help="The number of characters in randomly generated nonces when using option 2."
+        metavar='INTEGER',
+        help='The number of characters in randomly generated nonces when using option 2.'
     )
     args = parser.parse_args(argv[1:])
     return args
@@ -309,56 +309,56 @@ def main(argv=sys.argv):
     output_color = _Color.GREEN
 
     while True:
-        print("1. Generate Key")
-        print("2. Generate Nonce")
-        print("3. Encrypt")
-        print("4. Decrypt")
-        print("5. Quit")
-        selection = _input_loop(">>> ")
-        if selection == "1":
-            print_("".join(random.sample(args.alphabet, 36)), color=output_color)
-        elif selection == "2":
+        print('1. Generate Key')
+        print('2. Generate Nonce')
+        print('3. Encrypt')
+        print('4. Decrypt')
+        print('5. Quit')
+        selection = _input_loop('>>> ')
+        if selection == '1':
+            print_(''.join(random.sample(args.alphabet, 36)), color=output_color)
+        elif selection == '2':
             nonce_chars = []
             for _ in range(args.nonce_length):
                 nonce_chars.extend(random.sample(args.alphabet, 1))
-            print_("".join(nonce_chars), color=output_color)
-        elif selection in ("3", "4"):
+            print_(''.join(nonce_chars), color=output_color)
+        elif selection in ('3', '4'):
             def validated_input(prompt, valid_chars):
                 while True:
                     val = _input_loop(prompt)
                     diff = set(val) - valid_chars
                     if not diff:
                         return val
-                    print_("Unsupported characters: {}".format("".join(diff)), color=error_color)
+                    print_('Unsupported characters: {}'.format(''.join(diff)), color=error_color)
 
             valid_chars = set(args.alphabet)
             while True:
-                key = validated_input("Key: ", valid_chars)
+                key = validated_input('Key: ', valid_chars)
                 valid_key = True
                 if len(key) != len(args.alphabet):
                     valid_key = False
-                    print_("Key must include exactly 36 characters.", color=error_color)
+                    print_('Key must include exactly 36 characters.', color=error_color)
                 missing_chars = set(args.alphabet) - set(key)
                 if len(missing_chars) > 0:
                     valid_key = False
-                    print_("Missing characters: {}".format("".join(missing_chars)), color=error_color)
+                    print_('Missing characters: {}'.format(''.join(missing_chars)), color=error_color)
                 if valid_key:
                     break
-            nonce = validated_input("Nonce: ", valid_chars)
-            text = validated_input("Text: ", valid_chars)
-            if selection == "3":
+            nonce = validated_input('Nonce: ', valid_chars)
+            text = validated_input('Text: ', valid_chars)
+            if selection == '3':
                 print_(encrypt(key, text, nonce=nonce), color=output_color)
             else:
                 print_(decrypt(key, text, nonce=nonce), color=output_color)
-        elif selection == "5":
+        elif selection == '5':
             pass
         else:
-            print_("Invalid selection: {}".format(selection), color=error_color)
+            print_('Invalid selection: {}'.format(selection), color=error_color)
             continue
         break
 
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())
