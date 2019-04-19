@@ -81,7 +81,7 @@ class _Logger:
 
     def log(self, string, end='\n'):
         if self.verbose:
-            print(string, end=end)
+            print(string, file=self.stream, end=end)
 
 
 # ************************************************************
