@@ -10,6 +10,11 @@ version_txt = os.path.join(os.path.dirname(__file__), 'version.txt')
 with open(version_txt, 'r') as f:
     __version__ = f.read().strip()
 
+_python_major_version = sys.version_info.major
+if _python_major_version < 3:
+    message = "Unsupported version of Python: {}".format(_python_major_version)
+    raise RuntimeError(message)
+
 
 # ************************************************************
 # * Environment
@@ -34,11 +39,6 @@ if sys.platform == 'win32':
 # ************************************************************
 # * Utils
 # ************************************************************
-
-_major_version = sys.version_info.major
-if _major_version < 3:
-    raise RuntimeError("Unsupported version of Python: {}".format(_major_version))
-
 
 def _isatty(stream):
     return hasattr(stream, 'isatty') and stream.isatty()
