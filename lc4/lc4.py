@@ -296,6 +296,11 @@ def _parse_args(argv):
         metavar='INTEGER',
         help='The number of characters in randomly generated nonces when using option 2.'
     )
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help='Enables status logging to stdout.'
+    )
     args = parser.parse_args(argv[1:])
     return args
 
@@ -347,9 +352,9 @@ def main(argv=sys.argv):
             nonce = validated_input('Nonce: ', valid_chars)
             text = validated_input('Text: ', valid_chars)
             if selection == '3':
-                print_(encrypt(key, text, nonce=nonce), color=output_color)
+                print_(encrypt(key, text, nonce=nonce, verbose=args.verbose), color=output_color)
             else:
-                print_(decrypt(key, text, nonce=nonce), color=output_color)
+                print_(decrypt(key, text, nonce=nonce, verbose=args.verbose), color=output_color)
         elif selection == '5':
             pass
         else:
