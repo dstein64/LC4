@@ -50,12 +50,14 @@ usage: lc4.py [-h] [-a STRING] [-n INTEGER]
 
 optional arguments:
   -h, --help            show this help message and exit
+  --version             show program's version number and exit
   -a STRING, --alphabet STRING
                         A string of 36 characters representing the alphabet.
                         (default: #_23456789abcdefghijklmnopqrstuvwxyz)
   -n INTEGER, --nonce-length INTEGER
                         The number of characters in randomly generated nonces
                         when using option 2. (default: 6)
+  --verbose             Enables status logging to stdout. (default: False)
 
 $ lc4
 1. Generate Key
