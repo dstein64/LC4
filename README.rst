@@ -8,7 +8,8 @@ Features
 - An `interactive command-line utility <https://github.com/dstein64/LC4/blob/master/documentation.md#interactive-command-line-utility>`__
 - Optional verbose output that visually shows the steps of the algorithm
 
-.. image:: verbose.gif :width: 200
+.. image:: https://github.com/dstein64/LC4/blob/master/verbose.gif?raw=true
+   :width: 200
 
 Requirements
 ------------
