@@ -43,6 +43,16 @@ Example Usage
 
 See [example.py](https://github.com/dstein64/LC4/blob/master/example.py).
 
+Tests
+-----
+
+Tests are in [tests/](https://github.com/dstein64/LC4/blob/master/tests).
+
+```sh
+# Run tests
+$ python3 -m unittest discover tests -v
+```
+
 License
 -------
 
