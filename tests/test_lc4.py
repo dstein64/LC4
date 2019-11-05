@@ -1,4 +1,5 @@
 import unittest
+
 from lc4 import encrypt, decrypt
 
 class TestLC4(unittest.TestCase):
