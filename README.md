@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dstein64/LC4.svg?branch=master)](https://travis-ci.org/dstein64/LC4)
+[![Build Status](https://github.com/dstein64/LC4/workflows/build/badge.svg)](https://github.com/dstein64/LC4/actions)
 
 LC4
 ===
