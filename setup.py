@@ -28,7 +28,7 @@ setup(
     },
     keywords=['cryptography', 'lc4', 'elsie-four'],
     license='MIT',
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding='utf8').read(),
     long_description_content_type='text/markdown',
     name='lc4',
     package_data={'lc4': ['version.txt']},
