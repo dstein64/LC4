@@ -58,9 +58,3 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-
-    - name: Install
-      run: |
-        pip install --verbose --no-cache-dir --only-binary lc4 --find-links . --no-index lc4
-        pip uninstall lc4
-        pip install --verbose --no-cache-dir --no-binary lc4 --find-links . --no-index lc4
