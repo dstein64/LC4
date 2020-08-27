@@ -40,6 +40,7 @@ jobs:
         path: ./dist
 
   install:
+    needs: packages
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -53,5 +54,11 @@ jobs:
       with:
         name: packages
 
-    - name: Display structure of downloaded files
-      run: ls -R
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install
+      run: |
+        pip install --verbose *.whl
