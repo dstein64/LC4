@@ -5,6 +5,9 @@ version_txt = os.path.join(os.path.dirname(__file__), 'lc4', 'version.txt')
 with open(version_txt, 'r') as f:
     version = f.read().strip()
 
+with open('README.md', encoding='utf8') as f:
+    long_description = f.read()
+
 setup(
     author='Daniel Steinberg',
     author_email='ds@dannyadam.com',
@@ -28,7 +31,7 @@ setup(
     },
     keywords=['cryptography', 'lc4', 'elsie-four'],
     license='MIT',
-    long_description=open('README.md', encoding='utf8').read(),
+    long_description=long_description,
     long_description_content_type='text/markdown',
     name='lc4',
     package_data={'lc4': ['version.txt']},
