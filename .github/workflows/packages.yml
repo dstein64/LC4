@@ -38,3 +38,20 @@ jobs:
       with:
         name: packages
         path: ./dist
+
+  install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        python-version: [3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    - name: Download
+      uses: actions/download-artifact@v2
+      with:
+        name: packages
+
+    - name: Display structure of downloaded files
+      run: ls -R
