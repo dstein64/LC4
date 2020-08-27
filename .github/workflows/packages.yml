@@ -38,23 +38,3 @@ jobs:
       with:
         name: packages
         path: ./dist
-
-  install:
-    needs: packages
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
-
-    steps:
-    - name: Download
-      uses: actions/download-artifact@v2
-      with:
-        name: packages
-
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
