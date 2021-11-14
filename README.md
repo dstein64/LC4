@@ -3,8 +3,8 @@
 LC4
 ===
 
-A Python library that implements ElsieFour (LC4) encryption, based on the algorithm in
-(Alan Kaminsky 2017).
+A Python library that implements ElsieFour (LC4) encryption, based on the algorithm from
+Kaminsky (2017).
 
 Features
 --------
