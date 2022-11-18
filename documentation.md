@@ -23,12 +23,12 @@ Text is decrypted with *lc4.decrypt*.
 
 * **key** A *secret* permutation of the characters in the alphabet (see documentation for
 *alphabet* below). A key can be randonly generated using the command-line utility (see
-*Interactive Command-Line Utility* documentaion below).
+*Interactive Command-Line Utility* documentation below).
 * **text** Text to be encrypted/decrypted.
 * **nonce** (optional) A sequence of randomly chosen characters from the alphabet. The paper
 specifies that nonces be 6 or more characters and different for each message. A nonce can be
 randonly generated using the command-line utility (see *Interactive Command-Line Utility*
-documentaion below).
+documentation below).
 * **alphabet** (optional; defaults to "#_23456789abcdefghijklmnopqrstuvwxyz") A string of 36
 unique characters that comprise messages.
 * **verbose** (optional; defaults to False) A boolean indicating whether there should be
